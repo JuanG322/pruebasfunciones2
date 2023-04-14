@@ -28,6 +28,21 @@ void tiempo(int, int&, int&, int&);
 //Ejercicio 8
 void calc_anos(int, int&, int&, int&);
 
+//Ejercicio 9
+void cuadrado(int vec[], int);
+
+//Ejercicio 10
+int padirDatos(int, int[]);
+
+//Ejercico 11
+void invertirsigno(int, int[]);
+
+//Ejercicio 12
+void impares(int, int[]);
+
+//Ejercicio 13
+void mostrarMatriz(int [][3], int,int);
+
 int main()
 {
     cout << "Hello World!" << endl;
@@ -41,7 +56,12 @@ int main()
         cout<<"5. Intercambiar el calor de 2 variables con parametros por referencia"<<endl;
         cout<<"6. Billetes con valores por referencia"<<endl;
         cout<<"7. Minutos a horas:min:seg "<<endl;
-        cout<<"8. "<<endl;
+        cout<<"8. Calcular la fecha"<<endl;
+        cout<<"9. El cuadrado de un numero con paso de parametros con vectores"<<endl;
+        cout<<"10. Sumar todos los elementos de un vector"<<endl;
+        cout<<"11. Cambiar el signo de un numero"<<endl;
+        cout<<"12. Mostrar los elementos impares de un arreglo"<<endl;
+        cout<<"13. El cuadrado de todos los elementos de una matriz"<<endl;
         cout<<"0. Salir"<<endl;
         cout<<"Escoje: ";cin>>opcion;
 
@@ -141,6 +161,47 @@ int main()
             break;
         }
 
+        case 9:{
+            const int TAM = 5;
+            int vec[TAM] = {1,2,3,4,5};
+
+            cuadrado(vec, TAM);
+            cout<<endl;
+            break;
+        }
+
+        case 10:{
+            int TAM = 0, vec[100];
+            int resultado = padirDatos(TAM, vec);
+            cout<<"El vector sumado es igual a: "<<resultado<<endl<<endl;
+            break;
+        }
+
+        case 11:{
+            int TAM = 0;
+            cout<<"Ingrese el tamano del vector: ";cin>>TAM;
+            int vec[TAM];
+            invertirsigno(TAM, vec);
+            break;
+        }
+
+        case 12:{
+            /*Ejercicio 14: Realiza una función que tome como parámetros un vector de enteros y
+             * su tamaño e imprima un vector con los elementos impares del vector recibido.
+             */
+            int TAM = 0;
+            cout<<"Ingrese el tamano del vector: ";cin>>TAM;
+            int vec[TAM];
+            impares(TAM, vec);
+            break;
+        }
+
+        case 13:{
+            const int Nfilas = 2, Ncolumnas = 3;
+            int m[Nfilas][Ncolumnas] = {{1,2,3},{4,5,6}};
+            mostrarMatriz(m, Nfilas, Ncolumnas);
+            break;
+        }
         case 0:{
             opcion = 0;
             break;
@@ -219,6 +280,7 @@ void tiempo(int totalseg, int& seg, int& min, int& hora){
     seg = totalseg;
 }
 
+//Ejercicio 8
 void calc_anos(int total_dias, int& ano, int& mes, int& dia){
     ano = total_dias/360;
     total_dias %= 360;
@@ -227,4 +289,73 @@ void calc_anos(int total_dias, int& ano, int& mes, int& dia){
     total_dias %= 30;
 
     dia = total_dias;
+}
+
+//Ejercicio 9
+void cuadrado(int vec[], int tam){
+    int num = 0;
+    for(int i = 0; i<tam; i++){
+        num = vec[i];
+        vec[i] *= vec[i];
+        cout<<"El Cuadraro de "<<num<<" es "<<vec[i]<<endl;
+    }
+}
+
+//Ejercico 10
+int padirDatos(int TAM, int vec[]){
+    int suma = 0;
+    cout<<"Digite el numero de elementos del vector: ";cin>>TAM;
+    for(int i = 0; i<TAM; i++){
+        cout<<"Digite un numero para la posicion "<<i+1 <<endl;
+        cin>>vec[i];
+    }
+    for(int i = 0; i<TAM; i++){
+        suma += vec[i];
+    }
+
+   return suma;
+}
+
+//Ejercicio 11
+void invertirsigno(int TAM, int vec[]){
+    for(int i = 0; i<TAM; i++){
+        cout<<"Digite un numero para la posicion "<<i+1<<": ";
+        cin>>vec[i];
+        vec[i] *= -1;
+    }
+    for(int i = 0;i<TAM; i++){
+        cout<<"Posicon "<<i<<" -> "<<vec[i]<<endl;
+    }
+}
+
+//Ejercicio 12
+void impares(int TAM, int vec[]){
+    for(int i = 0; i<TAM; i++){
+        cout<<"Digite un numero para la posicion "<<i+1<<": ";
+        cin>>vec[i];
+    }
+    for(int i = 0; i<TAM; i++){
+       if((vec[i] % 2 != 0) && (vec[i] != 1)){
+           cout<<"Posicon "<<i<<" -> "<<vec[i]<<endl;
+       }
+    }
+}
+
+//Ejercicio 13
+void mostrarMatriz(int m[][3], int nfilas,int ncolumnas){
+    cout<<"Original"<<endl;
+    for(int i = 0; i<nfilas; i++){
+        for(int j = 0; j < ncolumnas; j++){
+            cout<<m[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    cout<<"Modificada"<<endl;
+    for(int i = 0; i<nfilas; i++){
+        for(int j = 0; j < ncolumnas; j++){
+            m[i][j] *= m[i][j];
+            cout<<m[i][j]<<" ";
+        }
+        cout<<endl;
+    }
 }
