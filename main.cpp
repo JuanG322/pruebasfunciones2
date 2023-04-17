@@ -2,6 +2,28 @@
 
 using namespace std;
 
+//Structs
+
+//Ejercicio 16
+struct Persona{
+    char nombre[30];
+    int edad;
+};
+
+//Ejercicio 17
+struct Complejo{
+    float real,imaginaria;
+}z1,z2;
+
+//Ejercicio 18
+struct Fecha {
+    int dia;
+    int mes;
+    int ano;
+};
+
+//Headers
+
 //Ejercicio 1
 template <class TIPOD>
 void despliegue(TIPOD dato);
@@ -43,6 +65,35 @@ void impares(int, int[]);
 //Ejercicio 13
 void mostrarMatriz(int [][3], int,int);
 
+//Ejercicio 14
+void determinar(int [][100], int, int);
+
+//Ejercico 15
+void menordefila(int[][3], int, int);
+
+//Ejercicio 16
+void pedirDatos(Persona&);
+void mostrarDatos(Persona);
+
+//Ejercicio 17
+void pedirDatos();
+Complejo suma(Complejo, Complejo);
+void muestra(Complejo);
+
+//Ejercicio 18
+Fecha fechaMayor();
+
+//Ejrcicio 19
+int factorial(int);
+
+//Ejercicio 20
+int sumar(int);
+
+//Ejercicio 21
+int fibonacci(int n);
+//Main
+
+
 int main()
 {
     cout << "Hello World!" << endl;
@@ -62,6 +113,13 @@ int main()
         cout<<"11. Cambiar el signo de un numero"<<endl;
         cout<<"12. Mostrar los elementos impares de un arreglo"<<endl;
         cout<<"13. El cuadrado de todos los elementos de una matriz"<<endl;
+        cout<<"14. Verificar si una matriz es simetrica con funciones"<<endl;
+        cout<<"15. Devolver el menor elemneto de una fila de una matriz"<<endl;
+        cout<<"16. Prototipo structs con funiones"<<endl;
+        cout<<"17. Suma de numeros complejos"<<endl;
+        cout<<"18. Fecha Mas reciente"<<endl;
+        cout<<"19. Factorial"<<endl;
+        cout<<"20. Suma de los primeros n numeros"<<endl;
         cout<<"0. Salir"<<endl;
         cout<<"Escoje: ";cin>>opcion;
 
@@ -186,9 +244,6 @@ int main()
         }
 
         case 12:{
-            /*Ejercicio 14: Realiza una función que tome como parámetros un vector de enteros y
-             * su tamaño e imprima un vector con los elementos impares del vector recibido.
-             */
             int TAM = 0;
             cout<<"Ingrese el tamano del vector: ";cin>>TAM;
             int vec[TAM];
@@ -202,6 +257,89 @@ int main()
             mostrarMatriz(m, Nfilas, Ncolumnas);
             break;
         }
+
+        case 14:{
+            int matriz[100][100];
+            int filas, columnas;
+            cout << "Ingrese el numero de filas de la matriz: "; cin >> filas;
+            cout << "Ingrese el numero de columnas de la matriz: "; cin >> columnas;
+            for(int i = 0; i < filas; i++) {
+                for(int j = 0; j < columnas; j++) {
+                    cout << "Ingrese el elemento [" << i << "][" << j << "]: ";
+                    cin >> matriz[i][j];
+                }
+            }
+            determinar(matriz, filas, columnas);
+            break;
+        }
+
+        case 15:{
+            const int filas = 3, columnas = 3;
+            int m[filas][columnas] = {{21,32,31},
+                                      {14,25,6},
+                                      {21,4,61}};
+            menordefila(m, filas, columnas);
+            break;
+        }
+
+        case 16:{
+            Persona p1;
+            pedirDatos(p1);
+            mostrarDatos(p1);
+            break;
+        }
+
+        case 17:{
+            pedirDatos();
+
+            Complejo x = suma(z1,z2);
+            muestra(x);
+            break;
+            /*Ejercicio 18: Escriba una función en C++ llamada mayor() que devuelva la
+             * fecha más reciente de cualquier par de fechas que se le transmitan.
+             * Por ejemplo, si se transmiten las fechas 10/9/2005 y 11/3/2015 a mayor(),
+             * será devuelta la segunda fecha.*/
+        }
+
+        case 18:{
+            Fecha mayor = fechaMayor();
+            cout << "La fecha mayor es: " << mayor.dia << "/" << mayor.mes << "/" << mayor.ano << endl;
+            cout << "La fecha mayor es: " << mayor.dia << "/" << mayor.mes << "/" << mayor.ano << endl;
+            break;
+        }
+
+        case 19:{
+            cout<<endl<<"Factorial = "<<factorial(5)<<endl;
+            break;
+        }
+
+        case 20:{
+            int nElementos;
+            do{
+                cout<<"Digite el numero de elementos: ";
+                cin >> nElementos;
+            }while(nElementos <= 0);
+
+            cout<<"La suma es: "<<sumar(nElementos)<<endl<<endl;
+            break;
+        }
+
+        case 21:{
+            int nElementos;
+
+                //Pedimos un numero entero positivo
+            do{
+                cout<<"Digite el numero de elementos: ";
+                cin>>nElementos;
+            }while(nElementos <= 0);
+
+                //Mandamos llamar a la funcion pero de forma iterativa para imprimir todos los elementos
+            cout<<"Serie Fibonacci: ";
+            for(int i=0;i<nElementos;i++){
+                cout<<fibonacci(i)<<" , ";
+            }
+            break;
+        }
         case 0:{
             opcion = 0;
             break;
@@ -210,6 +348,10 @@ int main()
     }
     return 0;
 }
+
+
+//Funciones
+
 
 //Ejercicio 1
 template <class TIPOD>
@@ -357,5 +499,135 @@ void mostrarMatriz(int m[][3], int nfilas,int ncolumnas){
             cout<<m[i][j]<<" ";
         }
         cout<<endl;
+    }
+}
+
+//Ejercicio 14
+void determinar(int matriz[][100], int filas, int columnas) {
+    bool bandera = true;
+
+    if(filas == columnas) {
+        for(int i = 0; i < filas; i++) {
+            for(int j = 0; j < columnas; j++) {
+                if(matriz[i][j] != matriz[j][i]) {
+                    bandera = false;
+                }
+            }
+        }
+    }
+    else {
+        bandera = false;
+    }
+
+    if(bandera == true) {
+        cout << "La matriz es simetrica" << endl;
+    }
+    else {
+        cout << "La matriz no es simetrica" << endl;
+    }
+}
+
+//Ejercicio 15
+void menordefila(int matriz[][3], int filas, int columnas){
+    int menor = 999999;
+    for(int i = 0; i<filas; i++){
+        for(int j = 0; j < columnas; j++){
+            //cout<<matriz[i][j]<<" ";
+            if(matriz[i][j] < menor) menor = matriz[i][j];
+        }
+        //cout<<endl;
+        cout<<"En la fila "<<i+1<<" el numero menor es: "<<menor<<endl;
+        menor = 999999;
+    }
+}
+
+//Ejercicio 16
+void pedirDatos(Persona& p){
+    cout<<"Digite su nombre: ";
+    cin.getline(p.nombre,30,'\n');
+    cout<<"Digite su edad: ";
+    cin>>p.edad;
+    cin.ignore();
+}
+
+void mostrarDatos(Persona p){
+    cout<<endl<<endl<<"Nombre: "<<p.nombre<<endl;
+    cout<<"Edad: "<<p.edad<<endl;
+}
+
+
+//Ejercicio 17
+void pedirDatos(){
+    cout<<"Digite los datos para el primer numero complejo: "<<endl;
+    cout<<"Parte real: ";cin>>z1.real;
+    cout<<"Parte imaginaria: ";cin>>z1.imaginaria;
+
+    cout<<"Digite los datos para el segundo numero complejo: "<<endl;
+    cout<<"Parte real: ";cin>>z2.real;
+    cout<<"Parte imaginaria: ";cin>>z2.imaginaria;
+}
+
+Complejo suma(Complejo z1, Complejo z2){
+    z1.real += z2.real;
+    z1.imaginaria += z2.imaginaria;
+
+    return z1;
+}
+
+void muestra(Complejo x){
+    cout<<endl<<"Resultado de la suma "<<x.real<<" , "<<x.imaginaria<<endl;
+}
+
+
+//Ejercicio 18
+Fecha fechaMayor() {
+    int ano = 0, mes = 0, dia = 0;
+    int mayorA = 0, mayorM = 0, mayorD = 0;
+
+    for (int i = 0; i < 2; i++) {
+        cout << "Ingrese las 2 fechas (Dias->Mes->Ano)" << endl;
+        cout << "Fecha " << i+1 << endl;
+        cout << "Dia: "; cin >> dia; cout << "Mes: "; cin >> mes; cout << "Ano: "; cin >> ano;
+
+        if ((13 > mes > 0) && (30 >= dia > 0)) {
+            if ( (ano > mayorA) || ((ano == mayorA) && (mes > mayorM )) ||  ((ano == mayorA) && (mes == mayorM ) && (dia>mayorD))) {
+                mayorA = ano, mayorM = mes, mayorD = dia;
+            }
+        }
+        else {
+            cout << "Fecha invalida";
+            i--;
+        }
+    }
+
+    Fecha resultado = { mayorD, mayorM, mayorA };
+    return resultado;
+}
+
+//Ejercico 19
+int factorial(int n){
+    if(n==0) n = 1;
+    else n = n * factorial(n-1);
+
+    return n;
+}
+
+//Ejercicio 20
+int sumar(int n){
+    int suma = 0;
+
+    if(n == 1) suma = 1;
+    else suma  = n+sumar(n-1);
+
+    return suma;
+}
+
+//Ejercicio 21
+int fibonacci(int n){
+    if(n<2){//Caso base
+        return n;
+    }
+    else{//Caso general
+        return fibonacci(n-1)+fibonacci(n-2);
     }
 }
